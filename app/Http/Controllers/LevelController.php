@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\models\Niveis;
 
 class LevelController extends Controller
 {
@@ -13,7 +14,7 @@ class LevelController extends Controller
      */
     public function index()
     {
-        //
+        return Niveis::all();
     }
 
     /**
