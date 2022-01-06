@@ -24,7 +24,7 @@ class LevelController extends Controller
      */
     public function create()
     {
-        //
+        return Niveis::create($request->all());
     }
 
     /**
@@ -69,7 +69,10 @@ class LevelController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $level = Niveis::find($id);
+        $level->update($request->all());
+
+        return $level;
     }
 
     /**
@@ -80,6 +83,6 @@ class LevelController extends Controller
      */
     public function destroy($id)
     {
-        //
+        return Niveis::destroy($id);
     }
 }
