@@ -2,7 +2,7 @@
 <b-container fluid>
     <Topbar></Topbar>
     <Sidebar></Sidebar>
-    <router-view></router-view>
+    <router-view class="mt-4 ml-5"></router-view>
 </b-container>
 </template>
 

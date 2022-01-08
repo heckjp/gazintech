@@ -3,6 +3,10 @@ import VueRouter from 'vue-router';
 import Home from '../pages/Home.vue';
 import Register from '../pages/Register.vue';
 import Login from '../pages/Login.vue';
+import ListDesenvolvedores from '../pages/desenvolvedores/ListDesenvolvedores.vue';
+import FormDesenvolvedores from '../pages/desenvolvedores/FormDesenvolvedores.vue';
+import ListNiveis from '../pages/niveis/ListNiveis.vue';
+import FormNiveis from '../pages/niveis/FormNiveis.vue';
 
 Vue.use(VueRouter);
 const routes=[
@@ -10,24 +14,41 @@ const routes=[
             path: '/',
             name: 'Home',
             component: Home,
-        //     children: [
-        //       {
-        //       path:'albums',
-        //       name: 'albums',
-        //       component:Albums
-        //     },
-        //     {
-        //       path:'artists',
-        //       name:'artists',
-        //       component:Artists
-        //     },
-        //     {
-        //       path:'artists/:id',
-        //       name: 'artistDetail',
-        //       component: ArtistDetails
+            children: [
+                {
+                path:'desenvolvedores',
+                name: 'desenvolvedores',
+                component:ListDesenvolvedores
+                },
+                {
+                    path:'niveis',
+                    name:'niveis',
+                    component:ListNiveis
+                },
+                {
+                    path:'desenvolvedores/novo',
+                    name: 'newDesenvolvedores',
+                    component:FormDesenvolvedores
+    
+                },
+                {
+                    path:'desenvolvedores/:id',
+                    name: 'editDesenvolvedores',
+                    component: FormDesenvolvedores
 
-        //     },
-        //   ],
+                },
+                {
+                    path:'niveis/novo',
+                    name: 'newNiveis',
+                    component: FormNiveis
+  
+                },
+                {
+                    path:'niveis/:id',
+                    name: 'editNiveis',
+                    component: FormNiveis
+                },
+            ],
         },
         {
             path: '/login',
