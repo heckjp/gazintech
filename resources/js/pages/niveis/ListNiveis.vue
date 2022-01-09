@@ -10,13 +10,29 @@
         </b-row>
         <b-row class="mt-4">
             <b-col>
-                <b-table striped :fields="fields" :items="levels" table-variant="dark" sort-by>
+                <b-table striped 
+                        :fields="fields" 
+                        :items="levels" 
+                         head-variant="dark" 
+                         id="levels-table" 
+                         :per-page="perPage"
+                        :current-page="currentPage">
                     <template v-slot:cell(action)="row">
                         <b-button variant="dark" class="m-2" v-b-modal="'modal-edit'" v-on:click="edit(row.item)" ><b-icon-pencil-square />Editar</b-button>
                      
                         <b-button variant="dark" @click="deleteLevel(row.item.id)"><b-icon-trash />Excluir</b-button>
                     </template>
                 </b-table>
+            </b-col>
+        </b-row>
+        <b-row>
+            <b-col>
+                 <b-pagination
+                    v-model="currentPage"
+                    :total-rows="rows"
+                    :per-page="perPage"
+                    aria-controls="levels-table"
+                    ></b-pagination>
             </b-col>
         </b-row>
     </b-container>
@@ -32,7 +48,7 @@
              search:'',
              fields:[
                 {key:'nivel', label: 'Nivel'},
-              
+                {key:'action', label: 'Ações'},
             ]
          }
      },
@@ -41,30 +57,33 @@
              this.$router.push("/niveis/novo");
          },
           getLevels: function (){
-             this.$http.get(this.apiurl+"/level").then((result)=>{
-                 this.levels = result.data;
-                 console.log(this.levels,'levels')
+            var vm = this;
+             vm.$http.get(vm.apiurl+"/level").then((result)=>{
+                 vm.levels = result.data;
+                 console.log(vm.levels,'levels')
              })
          },
-         deletelevel: function(){
-              this.$swal.fire({
-                title: 'Delete album?',
-                text: "The album with code "+id +" will be removed permanently",
+          edit(item){
+             var vm = this;
+             vm.$router.push("/niveis/"+item.id);
+         },
+         deleteLevel(id){
+            var vm= this;
+              vm.$swal.fire({
+                title: 'Excluir nível?',
+                text: "O registro será excluído permanentemente",
                 icon: 'warning',
                 showCancelButton: true,
-                confirmButtonText: 'Yes',
-                cancelButtonText:'No'
-}).then(response=>{
+                confirmButtonText: 'Sim',
+                cancelButtonText:'Não'
+                }).then(response=>{
                 if(response.isConfirmed) {
-                vm.$http.delete(this.apiurl+'/level/'+id,{
-                headers:{
-                    Authorization: process.env.MIX_API_KEY
-                }}).then(function(response){
-                    vm.$swal.fire('Album deleted!','','success');
-                    vm.getAlbums();
-                }).catch(function(err){
-                    console.log(err)
-                })
+                    vm.$http.post(vm.apiurl+'/level/'+id,{_method: 'DELETE'}).then(function(response){
+                        vm.$swal.fire('Nível excluído','','success');
+                        vm.getAlbums();
+                    }).catch(function(err){
+                        console.log(err)
+                    })
                 }
             }).catch(err =>{
                 console.log(err)
@@ -74,7 +93,12 @@
      },
      mounted(){
          this.getLevels()
-     }
+     },
+      computed: {
+      rows() {
+        return this.levels.length
+      }
+    }
  }
 
 </script>

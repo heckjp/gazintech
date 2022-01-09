@@ -24,7 +24,7 @@ class DeveloperController extends Controller
      */
     public function create()
     {
-        return Desenvolvedores::create($request->all());
+        
     }
 
     /**
@@ -35,7 +35,7 @@ class DeveloperController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        return Desenvolvedores::create($request->all());
     }
 
     /**
@@ -46,7 +46,8 @@ class DeveloperController extends Controller
      */
     public function show($id)
     {
-        //
+        $developer = new Desenvolvedores();
+        return $developer->find($id);
     }
 
     /**

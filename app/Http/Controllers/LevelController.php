@@ -24,7 +24,7 @@ class LevelController extends Controller
      */
     public function create()
     {
-        return Niveis::create($request->all());
+       
     }
 
     /**
@@ -35,7 +35,7 @@ class LevelController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        return Niveis::create($request->all());
     }
 
     /**
@@ -46,7 +46,8 @@ class LevelController extends Controller
      */
     public function show($id)
     {
-        //
+        $level = new Niveis();
+        return $level->find($id);
     }
 
     /**
