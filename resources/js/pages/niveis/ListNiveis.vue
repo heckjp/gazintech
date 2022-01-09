@@ -8,11 +8,21 @@
             <b-button variant="dark" v-on:click="newLevel()">Novo</b-button>
             </b-col>
         </b-row>
+         <b-row class="mt-4">
+            <b-col>
+                <b-input 
+                    name="filter" 
+                    v-model="filter" 
+                    placeholder="Digite para pesquisar">
+                </b-input>
+            </b-col>
+         </b-row>
         <b-row class="mt-4">
             <b-col>
                 <b-table striped 
                         :fields="fields" 
                         :items="levels" 
+                        :filter="filter"
                          table-variant="light" 
                          id="levels-table" 
                          sort-by.sync="sortBy"
@@ -46,6 +56,7 @@
      name:'ListNiveis',
      data () {
          return {
+             filter:"",
              apiurl: process.env.MIX_API_URL,
              levels:[],
              search:'',

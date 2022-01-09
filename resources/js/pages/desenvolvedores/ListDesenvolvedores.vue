@@ -8,6 +8,15 @@
                 <b-button variant="dark" v-on:click="newDeveloper()">Novo</b-button>
             </b-col>
         </b-row>
+         <b-row class="mt-4">
+            <b-col>
+                <b-input 
+                    name="filter" 
+                    v-model="filter" 
+                    placeholder="Digite para pesquisar">
+                </b-input>
+            </b-col>
+         </b-row>
         <b-row class="mt-4">
             <b-col>
                 <b-table striped :fields="fields" 
@@ -15,8 +24,8 @@
                          table-variant="light" 
                          id="developers-table" 
                          :per-page="perPage"
-                          sort-by.sync="sortBy"
-                          filter
+                         sort-by.sync="sortBy" 
+                         :filter="filter"
                         :sort-desc.sync="sortDesc"
                          sort-icon-left
                         :current-page="currentPage"
@@ -51,6 +60,7 @@
              
             apiurl: process.env.MIX_API_URL,
             currentPage:1,
+            filter:"",
             perPage:10,
             sortBy:'nome',
             sortDesc:false,
