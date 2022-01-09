@@ -61,7 +61,13 @@
                                 }
                             })
                     }).catch((err)=>{
-                        console.log(err,'error')
+                         vm.$swal.fire({
+                                title:"Erro ao cadastrar",
+                                icon:'success',
+                                onClose: () =>{
+                                    vm.$router.push("/niveis")
+                                }
+                            })
                     })
                } else {
                     let id=vm.$route.params.id;
@@ -74,7 +80,13 @@
                                 }
                             })
                     }).catch((err)=>{
-                        console.log(err,'error')
+                        vm.$swal.fire({
+                                title:"Erro ao editar cadastro",
+                                icon:'error',
+                                onClose: () =>{
+                                    vm.$router.push("/niveis")
+                                }
+                            })
                     })
                }
           },

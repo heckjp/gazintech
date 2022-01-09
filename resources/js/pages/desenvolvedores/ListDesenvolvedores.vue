@@ -12,9 +12,13 @@
             <b-col>
                 <b-table striped :fields="fields" 
                          :items="developers"  
-                         head-variant="dark" 
+                         table-variant="light" 
                          id="developers-table" 
                          :per-page="perPage"
+                          sort-by.sync="sortBy"
+                          filter
+                        :sort-desc.sync="sortDesc"
+                         sort-icon-left
                         :current-page="currentPage"
                 >
                       <template v-slot:cell(action)="row">
@@ -32,6 +36,7 @@
                     :total-rows="rows"
                     :per-page="perPage"
                     aria-controls="developers-table"
+                    
                     ></b-pagination>
             </b-col>
         </b-row>
@@ -47,15 +52,17 @@
             apiurl: process.env.MIX_API_URL,
             currentPage:1,
             perPage:10,
+            sortBy:'nome',
+            sortDesc:false,
               developers:[],
               search:'',
                fields:[
-                {key:'nome', label: 'Nome'},
-                {key:'datanascimento',label: 'Data de nascimento' },
-                {key:'idade',label: 'Idade' },
-                {key:'sexo',label: 'Sexo' },
-                {key:'nivel', label:'Nível'},
-                {key:'action', label: "Ações"}
+                {key:'nome', label: 'Nome', sortable:true,},
+                {key:'datanascimento',label: 'Data de nascimento',sortable:true },
+                {key:'idade',label: 'Idade',sortable:true },
+                {key:'sexo',label: 'Sexo',sortable:true },
+                {key:'nivel', label:'Nível',sortable:true},
+                {key:'action', label: "Ações", sortable:false}
             ]
          }
      },
@@ -87,11 +94,23 @@
                         vm.$swal.fire('Desenvolvedor excluído com sucesso!','','success');
                         vm.getDevelopers();
                     }).catch(function(err){
-                        console.log(err)
+                         vm.$swal.fire({
+                                title:"Cadastro editado com sucesso",
+                                icon:'success',
+                                onClose: () =>{
+                                    vm.$router.push("/desenvolvedores")
+                                }
+                            })
                     })
                     }
                 }).catch(err =>{
-                    console.log(err)
+                   vm.$swal.fire({
+                        title:"Erro ao excluir cadastro",
+                        icon:'error',
+                        onClose: () =>{
+                            vm.$router.push("/desenvolvedores")
+                        }
+                    })
                 })
             }
      },

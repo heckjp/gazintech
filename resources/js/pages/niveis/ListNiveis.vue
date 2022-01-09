@@ -13,8 +13,11 @@
                 <b-table striped 
                         :fields="fields" 
                         :items="levels" 
-                         head-variant="dark" 
+                         table-variant="light" 
                          id="levels-table" 
+                         sort-by.sync="sortBy"
+                         :sort-desc.sync="sortDesc"
+                         sort-icon-left
                          :per-page="perPage"
                         :current-page="currentPage">
                     <template v-slot:cell(action)="row">
@@ -46,9 +49,11 @@
              apiurl: process.env.MIX_API_URL,
              levels:[],
              search:'',
+              sortBy:'nivel',
+            sortDesc:false,
              fields:[
-                {key:'nivel', label: 'Nivel'},
-                {key:'action', label: 'Ações'},
+                {key:'nivel', label: 'Nivel', sortable:true},
+                {key:'action', label: 'Ações', sortable:false},
             ]
          }
      },
@@ -82,11 +87,23 @@
                         vm.$swal.fire('Nível excluído','','success');
                         vm.getAlbums();
                     }).catch(function(err){
-                        console.log(err)
+                        vm.$swal.fire({
+                                title:"Erro ao excluir cadastro",
+                                icon:'error',
+                                onClose: () =>{
+                                    vm.$router.push("/niveis")
+                                }
+                            })
                     })
                 }
             }).catch(err =>{
-                console.log(err)
+               vm.$swal.fire({
+                    title:"Erro ao excluir cadastro",
+                    icon:'error',
+                    onClose: () =>{
+                        vm.$router.push("/niveis")
+                    }
+                })
             })
             
         }
