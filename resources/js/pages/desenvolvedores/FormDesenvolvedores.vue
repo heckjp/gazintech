@@ -20,6 +20,9 @@
                                 placeholder="Nome do desenvolvedor"
                             >
                             </b-form-input>
+                              <b-form-invalid-feedback :state="validationNome">
+                                 Campo Obrigatório
+                            </b-form-invalid-feedback>
                         </b-form-group>
 
                         <b-form-radio-group
@@ -30,6 +33,9 @@
                             text-field="text"
                             >
                         </b-form-radio-group>
+                          <b-form-invalid-feedback :state="validationSexo">
+                                 Campo Obrigatório
+                            </b-form-invalid-feedback>
                         
                         <b-form-group 
                             label="Data de nascimento"
@@ -42,6 +48,9 @@
                                 placeholder="Data de nascimento"
                             >
                             </b-form-input>
+                              <b-form-invalid-feedback :state="validationDatanascimento">
+                                 Campo Obrigatório
+                            </b-form-invalid-feedback>
                         </b-form-group>
                         <b-form-group 
                             label="Idade"
@@ -55,6 +64,9 @@
                                 type="number"
                             >
                             </b-form-input>
+                              <b-form-invalid-feedback :state="validationIdade">
+                                 Campo Obrigatório
+                            </b-form-invalid-feedback>
                         </b-form-group>
 
                         <b-form-group 
@@ -71,12 +83,15 @@
                                             {{level.nivel}}
                                 </b-form-select-option>
                             </b-form-select>
+                              <b-form-invalid-feedback :state="validationNivel">
+                                 Campo Obrigatório
+                            </b-form-invalid-feedback>
                         </b-form-group>
 
                         <b-form-group 
                             label="Hobby"
                             label-for="input-hobby"
-                            description="Idade do desenvolvedor"
+                            description="Digite o hobby"
                         >
                             <b-form-input 
                                 id="input-hobby"
@@ -85,11 +100,14 @@
                             
                             >
                             </b-form-input>
+                             <b-form-invalid-feedback :state="validationHobby">
+                                 Campo Obrigatório
+                            </b-form-invalid-feedback>
                         </b-form-group>
                         <b-row>
                             <b-col align="right">
                                 <b-button variant="danger" v-on:click="cancel()">Cancelar</b-button>
-                                <b-button variant="success" v-on:click="save()">Cadastrar</b-button>
+                                <b-button variant="success" v-on:click="save()" :disabled="!validForm">Cadastrar</b-button>
                             </b-col>
                         </b-row>
                     </b-form>
@@ -189,7 +207,36 @@
      mounted(){
          this.getLevels()
          this.getEditData()
+     },
+      computed:{
+         validationNome(){
+             return this.form.nome.trim()!='' 
+         },
+          validationSexo(){
+             return this.form.sexo.trim()!='' 
+         },
+          validationIdade(){
+             return this.form.idade!=0
+         },
+          validationDatanascimento(){
+             return this.form.datanascimento.trim()!='' 
+         },
+          validationHobby(){
+             return this.form.hobby.trim()!='' 
+         },
+          validationNivel(){
+             return this.form.nivel!='' 
+         },
+          validForm(){
+         return this.validationNome 
+                && this.validationSexo
+                && this.validationDatanascimento
+                && this.validationIdade
+                && this.validationNivel
+                && this.validationHobby
      }
+     }
+    
  }
 
 </script>

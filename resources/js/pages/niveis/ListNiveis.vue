@@ -57,6 +57,8 @@
      data () {
          return {
              filter:"",
+             perPage:10,
+             currentPage:1,
              apiurl: process.env.MIX_API_URL,
              levels:[],
              search:'',

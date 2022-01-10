@@ -19,6 +19,9 @@ Vue.use(BootstrapVue);
 // Optionally install the BootstrapVue icon components plugin
 Vue.use(IconsPlugin);
 
+import VueMoment from 'vue-moment';
+Vue.use(VueMoment)
+
 
 //import axios from do request to backend
 import axios from 'axios';
@@ -38,6 +41,7 @@ import 'sweetalert2/dist/sweetalert2.min.css';
 Vue.use(VueSweetAlert2);
 
 import router from './router/index.js'
+import Vue from 'vue';
 
 
 

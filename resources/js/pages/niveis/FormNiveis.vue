@@ -17,14 +17,17 @@
                             <b-form-input 
                                 id="input-nivel"
                                 v-model="form.nivel"
-                                placeholder="Digite o nivel"
+                                placeholder="Digite o nivel" 
                             >
                             </b-form-input>
+                              <b-form-invalid-feedback :state="validation">
+                                 Campo Obrigatório
+                            </b-form-invalid-feedback>
                         </b-form-group>
                         <b-row>
                             <b-col align="right">
                                 <b-button variant="danger" v-on:click="cancel()">Cancelar</b-button>
-                                <b-button variant="success"  v-on:click="save()">Cadastrar</b-button>
+                                <b-button variant="success"  v-on:click="save()" :disabled="!validation">Cadastrar</b-button>
                             </b-col>
                         </b-row>
                     </b-form>
@@ -106,6 +109,11 @@
      },
       mounted(){
          this.getEditData()
+     },
+     computed:{
+         validation(){
+             return this.form.nivel.trim()!='' 
+         }
      }
  }
 

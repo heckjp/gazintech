@@ -30,6 +30,10 @@
                          sort-icon-left
                         :current-page="currentPage"
                 >
+                       <template v-slot:cell(datanascimento)="data">
+                        {{data.value | moment("DD/MM/YYYY")}}
+                    </template>
+                  
                       <template v-slot:cell(action)="row">
                         <b-button variant="dark" class="m-2" v-b-modal="'modal-edit'" v-on:click="edit(row.item)" ><b-icon-pencil-square />Editar</b-button>
                      
@@ -71,7 +75,7 @@
                 {key:'datanascimento',label: 'Data de nascimento',sortable:true },
                 {key:'idade',label: 'Idade',sortable:true },
                 {key:'sexo',label: 'Sexo',sortable:true },
-                {key:'nivel', label:'Nível',sortable:true},
+                {key:'nivel', label:'Nível',sortable:true },
                 {key:'action', label: "Ações", sortable:false}
             ]
          }
@@ -80,7 +84,7 @@
          newDeveloper() {
              this.$router.push("/desenvolvedores/novo");
          },
-         getDevelopers(){
+         async getDevelopers(){
              this.$http.get(this.apiurl+"/developer").then((result)=>{
                  this.developers = result.data;
              })
@@ -122,7 +126,23 @@
                         }
                     })
                 })
+            },
+            async getLevel(value){
+                const level =  await this.$http.get(this.apiurl+"/level/"+value).then(res=>{
+                        return res.data.nivel
+                        
+                    }).catch(err=>{
+                        this.$swal.fire({
+                                title:"Ocorreu um erro ao trazer dados do nivel ",
+                                icon:'warning',
+                                onClose: () =>{
+                                    this.$router.push("/desenvolvedores")
+                                }
+                            })
+                    })
+                 return level
             }
+            
      },
      mounted(){
          this.getDevelopers()
@@ -130,7 +150,11 @@
      computed: {
       rows() {
         return this.developers.length
-      }
+      },
+      
+
+
+      
     }
  }
 

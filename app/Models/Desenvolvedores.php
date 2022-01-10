@@ -12,7 +12,7 @@ class Desenvolvedores extends Model
     protected $fillable = ['nome','sexo','idade','nivel','datanascimento','hobby'];
     
     public function niveis() {
-        $this->hasOne(Niveis::class,'nivel');
+        return $this->hasOne(Niveis::class,'nivel');
      }
      
 }
