@@ -66,6 +66,7 @@
             sortDesc:false,
              fields:[
                 {key:'nivel', label: 'Nivel', sortable:true},
+                {key:'numeroDesenvolvedores', label: 'Desenvolvedores', sortable:false},
                 {key:'action', label: 'Ações', sortable:false},
             ]
          }
@@ -78,6 +79,12 @@
             var vm = this;
              vm.$http.get(vm.apiurl+"/level").then((result)=>{
                  vm.levels = result.data;
+                 vm.levels.forEach((value,index)=>{
+                     vm.$http.get(vm.apiurl+"/developer-count/"+value.id).then((res)=>{
+                         vm.levels[index]['numeroDesenvolvedores']= res.data
+                         this.$root.$emit('bv::refresh::table', 'levels-table')
+                     })
+                 })
                  console.log(vm.levels,'levels')
              })
          },
@@ -98,7 +105,7 @@
                 if(response.isConfirmed) {
                     vm.$http.post(vm.apiurl+'/level/'+id,{_method: 'DELETE'}).then(function(response){
                         vm.$swal.fire('Nível excluído','','success');
-                        vm.getAlbums();
+                        vm.getLevels();
                     }).catch(function(err){
                         vm.$swal.fire({
                                 title:"Erro ao excluir cadastro",

@@ -15,10 +15,12 @@ use App\Http\Controllers\LevelController;
 | is assigned the "api" middleware group. Enjoy building your API!
 |
 */
+Route::get('/developer-count/{nivel}',[DeveloperController::class, 'developerByLevel']);
 
 Route::resource('developer', DeveloperController::class);
 Route::resource('level', LevelController::class);
 
-Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
-    return $request->user();
-});
+
+// Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
+//     return $request->user();
+// });

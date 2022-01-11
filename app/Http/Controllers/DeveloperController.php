@@ -14,7 +14,7 @@ class DeveloperController extends Controller
      */
     public function index()
     {
-        return Desenvolvedores::all();
+        return Desenvolvedores::with("niveis")->get();
     }
 
     /**
@@ -85,5 +85,11 @@ class DeveloperController extends Controller
     public function destroy($id)
     {
         return Desenvolvedores::destroy($id);
+    }
+
+    public function developerByLevel($nivel){
+        $developers = new Desenvolvedores();
+    
+        return $developers->numeroPorNivel($nivel);
     }
 }

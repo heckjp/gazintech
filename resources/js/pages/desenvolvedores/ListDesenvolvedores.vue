@@ -75,7 +75,7 @@
                 {key:'datanascimento',label: 'Data de nascimento',sortable:true },
                 {key:'idade',label: 'Idade',sortable:true },
                 {key:'sexo',label: 'Sexo',sortable:true },
-                {key:'nivel', label:'Nível',sortable:true },
+                {key:'niveis.nivel', label:'Nível',sortable:true },
                 {key:'action', label: "Ações", sortable:false}
             ]
          }
@@ -127,21 +127,7 @@
                     })
                 })
             },
-            async getLevel(value){
-                const level =  await this.$http.get(this.apiurl+"/level/"+value).then(res=>{
-                        return res.data.nivel
-                        
-                    }).catch(err=>{
-                        this.$swal.fire({
-                                title:"Ocorreu um erro ao trazer dados do nivel ",
-                                icon:'warning',
-                                onClose: () =>{
-                                    this.$router.push("/desenvolvedores")
-                                }
-                            })
-                    })
-                 return level
-            }
+       
             
      },
      mounted(){
