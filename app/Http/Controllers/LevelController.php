@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\models\Niveis;
+use App\models\Desenvolvedores;
+use Response;
 
 class LevelController extends Controller
 {
@@ -84,6 +86,16 @@ class LevelController extends Controller
      */
     public function destroy($id)
     {
+        $developers = new Desenvolvedores();
+        $count = $developers->numeroPorNivel($id);
+        if($count >0){
+        $returnData = array(
+            'status' => 'error',
+            'message' => 'Não é possivel excluir o nível. Existem desenvolvedores associados a ele'
+        );
+        return Response::json($returnData, 501);
+        }
+
         return Niveis::destroy($id);
     }
 }
