@@ -82,7 +82,9 @@
                  vm.levels.forEach((value,index)=>{
                      vm.$http.get(vm.apiurl+"/developer-count/"+value.id).then((res)=>{
                          vm.levels[index]['numeroDesenvolvedores']= res.data
+                         if(vm.levels.length -1 == index){
                          this.$root.$emit('bv::refresh::table', 'levels-table')
+                         }
                      })
                  })
                  console.log(vm.levels,'levels')
