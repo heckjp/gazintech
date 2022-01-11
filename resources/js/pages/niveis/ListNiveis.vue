@@ -105,18 +105,30 @@
                 cancelButtonText:'Não'
                 }).then(response=>{
                 if(response.isConfirmed) {
-                    vm.$http.post(vm.apiurl+'/level/'+id,{_method: 'DELETE'}).then(function(response){
-                        vm.$swal.fire('Nível excluído','','success');
-                        vm.getLevels();
-                    }).catch(function(err){
-                        vm.$swal.fire({
-                                title:"Erro ao excluir cadastro",
+                      vm.$http.get(vm.apiurl+"/developer-count/"+id).then((res)=>{
+                         if(res.data>0){
+                             vm.$swal.fire({
+                                title:"Não é possivel excluir o cadastro. Existem desenvolvedores vínculados a este nível",
                                 icon:'error',
                                 onClose: () =>{
-                                    vm.$router.push("/niveis")
-                                }
+                                    vm.$router.push("/desenvolvedores")
+                                }   
                             })
-                    })
+                         } else {
+                            vm.$http.post(vm.apiurl+'/level/'+id,{_method: 'DELETE'}).then(function(response){
+                                vm.$swal.fire('Nível excluído','','success');
+                                vm.getLevels();
+                            }).catch(function(err){
+                                vm.$swal.fire({
+                                        title:"Erro ao excluir cadastro",
+                                        icon:'error',
+                                        onClose: () =>{
+                                            vm.$router.push("/niveis")
+                                        }
+                                    })
+                            })
+                         }
+                     })
                 }
             }).catch(err =>{
                vm.$swal.fire({
